@@ -17,5 +17,5 @@ export interface CartDataType {
 export interface CartProduct {
     count : number,
     price: number,
-    product: ProductType []
+    product: ProductType
 }
