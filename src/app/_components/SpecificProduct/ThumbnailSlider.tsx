@@ -6,9 +6,10 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import "swiper/css/thumbs";
+import type { Swiper as SwiperType } from "swiper";
 
 const ThumbnailSlider = ({ images }: { images: string[] }) => {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   return (
     <div className="lg:w-1/4">
