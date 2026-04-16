@@ -13,7 +13,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 
 const page = () => {
-  const { cartData, numberOfCartItems } = useContext(cartContext);
+  const { cartData, numberOfCartItems } = useContext(cartContext)!;
   const session = useSession();
 
   return (

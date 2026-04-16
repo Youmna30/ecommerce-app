@@ -20,7 +20,7 @@ import { deleteAllProductFromCart } from "@/actions/cart.action";
 import { cartContext } from "@/app/_contexts/CartContextProvider";
 import { Spinner } from "@/components/ui/spinner";
 const CartCardFooter = () => {
-  const { setCartData, setNumberOfCartItems } = useContext(cartContext);
+  const { setCartData, setNumberOfCartItems } = useContext(cartContext)!;
   const [loading, setLoading] = useState(false);
 
   async function deleteAllCart() {

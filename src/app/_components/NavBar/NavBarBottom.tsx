@@ -94,7 +94,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 const NavBarBottom = () => {
   const session = useSession();
-  const { numberOfCartItems } = useContext(cartContext);
+  const { numberOfCartItems } = useContext(cartContext)!;
   function handleSignout() {
     signOut({ redirect: true, callbackUrl: "/login" });
   }

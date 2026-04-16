@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 const AddProductToCart = ({ productId }: { productId: string }) => {
   const [loading, setLoading] = useState(false);
-  const { setNumberOfCartItems, setCartData } = useContext(cartContext);
+  const { setNumberOfCartItems, setCartData } = useContext(cartContext)!;
   async function handleAddToCartBtn() {
     try {
       setLoading(true);
