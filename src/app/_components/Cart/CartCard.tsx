@@ -31,7 +31,7 @@ const CartCard = ({
   price: number;
 }) => {
   const { imageCover, title, category, _id } = product;
-  const { setCartData, setNumberOfCartItems } = useContext(cartContext);
+  const { setCartData, setNumberOfCartItems } = useContext(cartContext)!;
   const [loading, setLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 

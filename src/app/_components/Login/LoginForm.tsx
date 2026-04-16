@@ -34,7 +34,7 @@ import { cartContext } from "@/app/_contexts/CartContextProvider";
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const { setNumberOfCartItems, setCartData } = useContext(cartContext);
+  const { setNumberOfCartItems, setCartData } = useContext(cartContext)!;
   const router = useRouter();
   const form = useForm({
     defaultValues: {
@@ -57,7 +57,7 @@ const LoginForm = () => {
       });
       router.push("/");
       const data = await getLoggedInUserCart();
-      setNumberOfCartItems(data?.numOfCartItems);
+      setNumberOfCartItems(data?.numOfCartItems!);
       setCartData(data?.data);
     } else {
       toast.error("Incorrect Email Or Password", {
@@ -193,13 +193,13 @@ const LoginForm = () => {
             </div>
           )}
         />
-          <button
-            type="submit"
-            disabled = {isLoading}
-            className="bg-[#16A34A] text-white rounded-lg flex items-center gap-2 justify-center w-full px-4 py-3 font-semibold hover:bg-[#15803d] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Sign In
-          </button>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="bg-[#16A34A] text-white rounded-lg flex items-center gap-2 justify-center w-full px-4 py-3 font-semibold hover:bg-[#15803d] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Sign In
+        </button>
       </form>
       <p className="font-medium text-[#4A5565] border-t border-t-[#F3F4F6] pt-6 text-center mt-8">
         New to FreshCart?

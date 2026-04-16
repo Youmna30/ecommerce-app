@@ -3,11 +3,18 @@ import { getLoggedInUserCart } from "@/actions/cart.action";
 import { CartDataType } from "@/types/cart.type";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-export const cartContext = createContext({});
+export const cartContext = createContext<{
+  cartData: CartDataType | null | undefined;
+  numberOfCartItems: number;
+  setCartData: React.Dispatch<
+    React.SetStateAction<CartDataType | null | undefined>
+  >;
+  setNumberOfCartItems: React.Dispatch<React.SetStateAction<number>>;
+} | null>(null);
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [numberOfCartItems, setNumberOfCartItems] = useState(0);
-  const [cartData, setCartData] = useState<CartDataType>();
+  const [cartData, setCartData] = useState<CartDataType | null>();
 
   async function getLoggedInCartData() {
     const data = await getLoggedInUserCart();
