@@ -44,7 +44,7 @@ const CartCard = ({
     }
     setLoading(false);
   }
-  async function updateItem(newCount) {
+  async function updateItem(newCount: number) {
     const res = await updateCartItem(_id, newCount);
     if (res?.status == "success") {
       setCartData(res.data);

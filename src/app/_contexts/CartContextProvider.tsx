@@ -1,12 +1,13 @@
 "use client";
 import { getLoggedInUserCart } from "@/actions/cart.action";
+import { CartDataType } from "@/types/cart.type";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 export const cartContext = createContext({});
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [numberOfCartItems, setNumberOfCartItems] = useState(0);
-  const [cartData, setCartData] = useState({});
+  const [cartData, setCartData] = useState<CartDataType>();
 
   async function getLoggedInCartData() {
     const data = await getLoggedInUserCart();
