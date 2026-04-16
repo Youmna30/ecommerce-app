@@ -4,8 +4,13 @@ import "./globals.css";
 import NavBarTop from "./_components/NavBar/NavBarTop";
 import NavBarBottom from "./_components/NavBar/NavBarBottom";
 import { cn } from "@/lib/utils";
+import TopFooter from "./_components/Footer/TopFooter";
+import Footer from "./_components/Footer/Footer";
+import { Toaster } from "@/components/ui/sonner";
+import MySessionProvider from "./_providers/MySessionProvider";
+import CartContextProvider from "./_contexts/CartContextProvider";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const exo = Exo({
   variable: "--font-exo",
@@ -23,11 +28,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("h-full", "antialiased", exo.className, "font-sans", geist.variable)}>
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        exo.className,
+        "font-sans",
+        geist.variable,
+      )}
+    >
       <body className="min-h-full flex flex-col">
-        <NavBarTop />
-        <NavBarBottom />
-        {children}
+        <MySessionProvider>
+          <CartContextProvider>
+            <NavBarTop />
+            <NavBarBottom />
+            {children}
+            <Toaster />
+            <TopFooter />
+            <Footer />
+          </CartContextProvider>
+        </MySessionProvider>
       </body>
     </html>
   );

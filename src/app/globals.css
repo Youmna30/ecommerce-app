@@ -130,6 +130,32 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: white;
+  color: #00c950 !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50%;
+  transition: 0.3s all;
+  display: none !important;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  scale: 110%;
+}
+.swiper-navigation-icon {
+  height: 18px !important;
+}
+@media (min-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex !important;
+  }
+}
+.swiper-slide-thumb-active button {
+  border: 4px solid #007aff;
+}
 
 @layer base {
   * {

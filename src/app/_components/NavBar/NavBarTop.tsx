@@ -1,11 +1,19 @@
+"use client";
 import Link from "next/link";
 import React from "react";
-import { CiUser } from "react-icons/ci";
 import { FaPhoneAlt, FaTruck, FaUserPlus } from "react-icons/fa";
 import { GiPresent } from "react-icons/gi";
 import { MdMailOutline } from "react-icons/md";
+import { FiUser } from "react-icons/fi";
+import { signOut, useSession } from "next-auth/react";
+import { PiSignOutBold } from "react-icons/pi";
 
 const NavBarTop = () => {
+  const session = useSession();
+  function handleSignout() {
+    signOut({ redirect: true, callbackUrl: "/login" });
+  }
+
   return (
     <div className="border-b border-gray-100 hidden lg:block">
       <div className="container mx-auto px-4">
@@ -25,7 +33,7 @@ const NavBarTop = () => {
             </div>
           </div>
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 pr-7 border-r border-gray-200">
               <div className="flex items-center gap-1.5 font-medium text-sm text-[#6A7282] hover:text-[#16a34a] transition-colors">
                 <FaPhoneAlt />
                 <a href="tel:+1 (800) 123-4567">+1 (800) 123-4567</a>
@@ -35,16 +43,32 @@ const NavBarTop = () => {
                 <a href="mailto:support@freshcart.com">support@freshcart.com</a>
               </div>
             </div>
-            <span className="w-px h-4 bg-gray-200"></span>
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-1.5 font-medium text-sm text-[#6A7282] hover:text-[#16a34a] transition-colors">
-                <CiUser />
-                <Link href={"/login"}>Sign In</Link>
-              </div>
-              <div className="flex items-center gap-1.5 font-medium text-sm text-[#6A7282] hover:text-[#16a34a] transition-colors">
-                <FaUserPlus />
-                <Link href={"/signup"}>Sign Up</Link>
-              </div>
+              {session.data ? (
+                <>
+                  <div className="flex items-center gap-1.5 font-medium text-sm text-[#4A5565] hover:text-[#16a34a] transition-colors cursor-pointer">
+                    <FiUser />
+                    <span>{session.data.user?.name}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-medium text-sm text-[#4A5565] hover:text-[#16a34a] transition-colors">
+                    <PiSignOutBold />
+                    <button onClick={handleSignout} className="cursor-pointer">
+                      Sign Out
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-1.5 font-medium text-sm text-[#4A5565] hover:text-[#16a34a] transition-colors cursor-pointer">
+                    <FiUser />
+                    <Link href={"/login"}>Sign In</Link>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-medium text-sm text-[#4A5565] hover:text-[#16a34a] transition-colors cursor-pointer">
+                    <FaUserPlus />
+                    <Link href={"/signup"}>Sign Up</Link>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
