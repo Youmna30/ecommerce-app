@@ -34,7 +34,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
       );
       setTotalPrice(() => {
         const originalPrice = priceAfterDiscount ? priceAfterDiscount : price;
-        return Number(quantityCount.current.value) * originalPrice;
+        return Number(quantityCount?.current?.value) * originalPrice;
       });
     }
   }
@@ -48,7 +48,7 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
         );
         setTotalPrice(() => {
           const originalPrice = priceAfterDiscount ? priceAfterDiscount : price;
-          return Number(quantityCount.current.value) * originalPrice;
+          return Number(quantityCount?.current?.value) * originalPrice;
         });
 
         if (quantityCount.current.value == String(1)) {
