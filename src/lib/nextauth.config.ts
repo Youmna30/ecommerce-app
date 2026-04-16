@@ -2,6 +2,31 @@ import {NextAuthOptions} from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { LoginType } from '../types/login.type';
 
+
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+      realBackendToken?: string;
+    };
+  }
+
+  interface User {
+    id: string;
+    realBackendToken?: string;
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+        realBackendToken?: string;
+
+  }
+}
+
 interface LoginResponseType {
     name:string,
     email:string,
@@ -31,6 +56,7 @@ export const nextAuthConfig : NextAuthOptions = {
 
             if(data.message == "success"){
                 return {
+                    id: data.user.id,
                     name: data.user.name,
                     email: data.user.email,
                     realBackendToken: data.token
