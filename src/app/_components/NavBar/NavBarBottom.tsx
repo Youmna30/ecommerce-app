@@ -53,6 +53,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { whishlistContext } from "@/app/_contexts/WhishlistContextProvider";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -95,6 +96,8 @@ const components: { title: string; href: string; description: string }[] = [
 const NavBarBottom = () => {
   const session = useSession();
   const { numberOfCartItems } = useContext(cartContext)!;
+  const { wishListCount } = useContext(whishlistContext)!;
+
   function handleSignout() {
     signOut({ redirect: true, callbackUrl: "/login" });
   }
@@ -180,10 +183,15 @@ const NavBarBottom = () => {
             </div>
           </Link>
           <Link
-            href={"/"}
-            className="p-2.5 rounded-full hover:bg-gray-100 transition-colors"
+            href={"/wishlist"}
+            className="p-2.5 rounded-full hover:bg-gray-100 transition-colors relative"
           >
             <FaRegHeart className="text-xl text-gray-500 hover:text-[#16a34a] transition-colors" />
+            {wishListCount > 0 && (
+              <span className="absolute top-0 right-0 size-4.5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+                {wishListCount}
+              </span>
+            )}
           </Link>
           <Link
             href={"/cart"}

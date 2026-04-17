@@ -9,6 +9,7 @@ import Footer from "./_components/Footer/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import MySessionProvider from "./_providers/MySessionProvider";
 import CartContextProvider from "./_contexts/CartContextProvider";
+import WhishlistContextProvider from "./_contexts/WhishlistContextProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -41,12 +42,14 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <MySessionProvider>
           <CartContextProvider>
+            <WhishlistContextProvider>
             <NavBarTop />
             <NavBarBottom />
             {children}
             <Toaster />
             <TopFooter />
             <Footer />
+            </WhishlistContextProvider>
           </CartContextProvider>
         </MySessionProvider>
       </body>

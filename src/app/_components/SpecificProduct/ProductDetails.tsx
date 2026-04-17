@@ -1,18 +1,31 @@
 "use client";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import RatingStars from "../RatingStars/RatingStars";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { IoCart, IoShareSocialSharp } from "react-icons/io5";
 import { FaBolt } from "react-icons/fa6";
-import { FaRegHeart } from "react-icons/fa";
+import { FaCheckCircle, FaHeart, FaRegHeart, FaSpinner } from "react-icons/fa";
 import SmallerInfo from "../InfoCards/SmallerInfo";
 import { ProductType } from "@/types/product.type";
+import { cartContext } from "@/app/_contexts/CartContextProvider";
+import { addProductToCart } from "@/actions/cart.action";
+import { toast } from "sonner";
+import { VscError } from "react-icons/vsc";
+import { whishlistContext } from "@/app/_contexts/WhishlistContextProvider";
+import {
+  addProductToWishList,
+  deleteWishlist,
+} from "@/actions/wishlist.action";
 
 const ProductDetails = ({ product }: { product: ProductType }) => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadingBtn, SetLoadingBtn] = useState(false);
+
   const quantityCount = useRef<HTMLInputElement | null>(null);
   const {
+    _id,
     category,
     brand,
     description,
@@ -23,6 +36,103 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
     ratingsAverage,
     ratingsQuantity,
   } = product;
+  const { setNumberOfCartItems, setCartData } = useContext(cartContext)!;
+  const { wishListProductList, setWishListProductList, setWishListCount } =
+    useContext(whishlistContext)!;
+  function checkProductInWishList() {
+    if (wishListProductList?.includes(_id)) {
+      return (
+        <button
+          onClick={handleAddToWishListBtn}
+          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-red-200 bg-red-50 text-red-600 text-base font-medium cursor-pointer"
+        >
+          {loadingBtn ? <FaSpinner className="animate-spin" /> : <FaHeart />}
+          Add to Wishlist
+        </button>
+      );
+    }
+    return (
+      <button
+        onClick={handleAddToWishListBtn}
+        className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-[#E5E7EB] text-[#364153] text-base font-medium cursor-pointer hover:text-[#16a34a] hover:border-[#86efac]"
+      >
+        {loadingBtn ? <FaSpinner className="animate-spin" /> : <FaRegHeart />}
+        Add to Wishlist
+      </button>
+    );
+  }
+  async function handleAddToCartBtn() {
+    try {
+      setLoading(true);
+      const res = await addProductToCart({ productId: _id });
+      if (res?.status == "success") {
+        toast.success(res.message, {
+          position: "top-right",
+          icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
+        });
+        setNumberOfCartItems(res.numOfCartItems);
+        setCartData(res.data);
+      } else {
+        toast.error(
+          () => {
+            return res?.message
+              ? res.message
+              : "Something Wrong happened, Please Try Again Later!";
+          },
+          {
+            position: "top-right",
+            icon: <VscError className="text-red-600 text-xl" />,
+          },
+        );
+      }
+    } catch (error) {
+      toast.error("Something Wrong happened, Please Try Again Later!", {
+        position: "top-right",
+        icon: <VscError className="text-red-600 text-xl" />,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+  async function handleAddToWishListBtn() {
+    try {
+      SetLoadingBtn(true);
+      let res = null;
+      if (wishListProductList?.includes(_id)) {
+        res = await deleteWishlist(_id);
+      } else {
+        res = await addProductToWishList({ productId: _id });
+      }
+
+      if (res?.status == "success") {
+        toast.success(res.message, {
+          position: "top-right",
+          icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
+        });
+        setWishListProductList(res.data);
+        setWishListCount(res.data.length);
+      } else {
+        toast.error(
+          () => {
+            return res?.message
+              ? res.message
+              : "Something Wrong happened, Please Try Again Later!";
+          },
+          {
+            position: "top-right",
+            icon: <VscError className="text-red-600 text-xl" />,
+          },
+        );
+      }
+    } catch (error) {
+      toast.error("Something Wrong happened, Please Try Again Later!", {
+        position: "top-right",
+        icon: <VscError className="text-red-600 text-xl" />,
+      });
+    } finally {
+      SetLoadingBtn(false);
+    }
+  }
   const [totalPrice, setTotalPrice] = useState(() => {
     return priceAfterDiscount ? priceAfterDiscount : price;
   });
@@ -145,7 +255,11 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
           </span>
         </div>
         <div className="flex items-center gap-2 mb-6">
-          <button className="w-full flex items-center justify-center gap-2 py-3.5 px-6 text-white rounded-xl cursor-pointer bg-[#16A34A] font-medium text-base shadow-lg shadow-[#16a34a]/25 hover:bg-[#15803d]">
+          <button
+            onClick={handleAddToCartBtn}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 text-white rounded-xl cursor-pointer bg-[#16A34A] font-medium text-base shadow-lg shadow-[#16a34a]/25 hover:bg-[#15803d] disabled:opacity-50"
+          >
             <IoCart className="text-xl" />
             Add to Cart
           </button>
@@ -155,10 +269,8 @@ const ProductDetails = ({ product }: { product: ProductType }) => {
           </button>
         </div>
         <div className=" flex  gap-3 mb-6">
-          <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 border-[#E5E7EB] text-[#364153] text-base font-medium cursor-pointer hover:text-[#16a34a] hover:border-[#86efac]">
-            <FaRegHeart />
-            Add to Wishlist
-          </button>
+          {checkProductInWishList()}
+
           <button className="flex items-center justify-center gap-2 px-4 py-3  rounded-xl border-2 border-[#E5E7EB] cursor-pointer hover:text-[#16a34a] hover:border-[#86efac]">
             <IoShareSocialSharp />
           </button>

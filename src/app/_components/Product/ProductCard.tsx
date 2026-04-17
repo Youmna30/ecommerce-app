@@ -5,6 +5,7 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import RatingStars from "../RatingStars/RatingStars";
 import Link from "next/link";
 import AddProductToCart from "./AddProductToCart";
+import AddProductToWishList from "./AddProductToWishList";
 
 interface ProductPropsType {
   product: ProductType;
@@ -30,9 +31,7 @@ export const ProductCard = ({ product }: ProductPropsType) => {
         </span>
       )}
       <div className="absolute right-3 top-3 flex flex-col space-y-2">
-        <button className="flex items-center justify-center rounded-full size-8 shadow-sm bg-white cursor-pointer">
-          <FaRegHeart className="text-[#4A5565] hover:text-red-500" />
-        </button>
+        <AddProductToWishList productId={_id} />
         <button className="flex items-center justify-center rounded-full size-8 shadow-sm bg-white cursor-pointer">
           <FaArrowsRotate className="text-[#4A5565] hover:text-[#16a34a]" />
         </button>

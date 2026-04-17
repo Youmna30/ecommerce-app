@@ -30,11 +30,15 @@ import { VscError } from "react-icons/vsc";
 import { useRouter } from "next/navigation";
 import { getLoggedInUserCart } from "@/actions/cart.action";
 import { cartContext } from "@/app/_contexts/CartContextProvider";
+import { whishlistContext } from "@/app/_contexts/WhishlistContextProvider";
+import { getUserWishListData } from "@/actions/wishlist.action";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const { setNumberOfCartItems, setCartData } = useContext(cartContext)!;
+  const { setWishListData, setWishListProductList, setWishListCount } =
+    useContext(whishlistContext)!;
   const router = useRouter();
   const form = useForm({
     defaultValues: {
@@ -56,9 +60,13 @@ const LoginForm = () => {
         icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
       });
       router.push("/");
-      const data = await getLoggedInUserCart();
-      setNumberOfCartItems(data?.numOfCartItems!);
-      setCartData(data?.data);
+      const cartData = await getLoggedInUserCart();
+      setNumberOfCartItems(cartData?.numOfCartItems!);
+      setCartData(cartData?.data);
+      const wishlistData = await getUserWishListData();
+      setWishListData(wishlistData);
+      setWishListCount(wishlistData?.count!);
+      setWishListProductList(wishlistData?.data.map((item) => item._id) || []);
     } else {
       toast.error("Incorrect Email Or Password", {
         position: "top-right",

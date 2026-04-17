@@ -18,9 +18,8 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
 
   async function getLoggedInCartData() {
     const data = await getLoggedInUserCart();
-    console.log("dataaaaaa", data);
 
-    if (data) {
+    if (data?.status == "success") {
       setNumberOfCartItems(data.numOfCartItems);
       setCartData(data.data);
     }
