@@ -16,7 +16,7 @@ const AddProductToCart = ({ productId }: { productId: string }) => {
       const res = await addProductToCart({ productId });
       if (res?.status == "success") {
         toast.success(res.message, {
-          position: "top-right",
+          position: "bottom-right",
           icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
         });
         setNumberOfCartItems(res.numOfCartItems);
@@ -29,14 +29,14 @@ const AddProductToCart = ({ productId }: { productId: string }) => {
               : "Something Wrong happened, Please Try Again Later!";
           },
           {
-            position: "top-right",
+            position: "bottom-right",
             icon: <VscError className="text-red-600 text-xl" />,
           },
         );
       }
     } catch (error) {
       toast.error("Something Wrong happened, Please Try Again Later!", {
-        position: "top-right",
+        position: "bottom-right",
         icon: <VscError className="text-red-600 text-xl" />,
       });
     } finally {

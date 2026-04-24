@@ -56,7 +56,7 @@ const LoginForm = () => {
     });
     if (res?.ok) {
       toast.success("Login Success", {
-        position: "top-right",
+        position: "bottom-right",
         icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
       });
       router.push("/");
@@ -66,10 +66,10 @@ const LoginForm = () => {
       const wishlistData = await getUserWishListData();
       setWishListData(wishlistData);
       setWishListCount(wishlistData?.count!);
-      setWishListProductList(wishlistData?.data.map((item) => item._id) || []);
+      setWishListProductList(wishlistData?.data?.map((item) => item._id) || []);
     } else {
       toast.error("Incorrect Email Or Password", {
-        position: "top-right",
+        position: "bottom-right",
         icon: <VscError className="text-red-600 text-xl" />,
       });
     }

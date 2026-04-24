@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext } from "react";
-import BreadCrumbCart from "../_components/Cart/BreadCrumbCart";
 import HeaderCart from "../_components/Cart/HeaderCart";
 import CartCard from "../_components/Cart/CartCard";
 import CartSummary from "../_components/Cart/CartSummary";
@@ -11,6 +10,7 @@ import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaBoxOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import BreadCrumb from "../_components/BreadCrumb/BreadCrumb";
 
 const page = () => {
   const { cartData, numberOfCartItems } = useContext(cartContext)!;
@@ -69,7 +69,7 @@ const page = () => {
       {cartData?.products && cartData?.products.length > 0 && (
         <div className="bg-gray-50 py-8">
           <div className="container mx-auto px-4">
-            <BreadCrumbCart />
+            <BreadCrumb pageName="Shopping Cart" />
             <HeaderCart numberOfCartItems={numberOfCartItems} />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">

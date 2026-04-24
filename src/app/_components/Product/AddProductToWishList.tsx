@@ -2,6 +2,7 @@
 import {
   addProductToWishList,
   deleteWishlist,
+  getUserWishListData,
 } from "@/actions/wishlist.action";
 import { whishlistContext } from "@/app/_contexts/WhishlistContextProvider";
 import React, { useContext, useState } from "react";
@@ -11,8 +12,12 @@ import { toast } from "sonner";
 
 const AddProductToWishList = ({ productId }: { productId: string }) => {
   const [loading, setLoading] = useState(false);
-  const { wishListProductList, setWishListProductList, setWishListCount } =
-    useContext(whishlistContext)!;
+  const {
+    wishListProductList,
+    setWishListProductList,
+    setWishListCount,
+    setWishListData,
+  } = useContext(whishlistContext)!;
 
   function checkProductInWishList() {
     if (wishListProductList?.includes(productId)) {
@@ -33,11 +38,15 @@ const AddProductToWishList = ({ productId }: { productId: string }) => {
 
       if (res?.status == "success") {
         toast.success(res.message, {
-          position: "top-right",
+          position: "bottom-right",
           icon: <FaCheckCircle className="text-[#16A34A] text-xl" />,
         });
         setWishListProductList(res.data);
         setWishListCount(res.data.length);
+        const data = await getUserWishListData();
+        if (data?.status == "success") {
+          setWishListData(data);
+        }
       } else {
         toast.error(
           () => {
@@ -46,14 +55,14 @@ const AddProductToWishList = ({ productId }: { productId: string }) => {
               : "Something Wrong happened, Please Try Again Later!";
           },
           {
-            position: "top-right",
+            position: "bottom-right",
             icon: <VscError className="text-red-600 text-xl" />,
           },
         );
       }
     } catch (error) {
       toast.error("Something Wrong happened, Please Try Again Later!", {
-        position: "top-right",
+        position: "bottom-right",
         icon: <VscError className="text-red-600 text-xl" />,
       });
     } finally {

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { MdHome } from "react-icons/md";
-const BreadCrumbCart = () => {
+const BreadCrumb = ({ pageName }: { pageName: string }) => {
   return (
     <div className="py-4">
       <Breadcrumb>
@@ -30,7 +30,7 @@ const BreadCrumbCart = () => {
           </BreadcrumbSeparator>
           <BreadcrumbItem>
             <BreadcrumbPage className="text-[#101828] font-medium text-sm">
-              Shopping Cart
+              {pageName}
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
@@ -39,4 +39,4 @@ const BreadCrumbCart = () => {
   );
 };
 
-export default BreadCrumbCart;
+export default BreadCrumb;
