@@ -10,7 +10,17 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import { MdHome } from "react-icons/md";
-const BreadCrumb = ({ title }: { title: string }) => {
+import { CategoryType } from "@/types/category.type";
+import { SubCategoryType } from "@/types/subcategory.type";
+const BreadCrumb = ({
+  title,
+  category,
+  subcategories,
+}: {
+  title: string;
+  category: CategoryType;
+  subcategories: SubCategoryType[];
+}) => {
   return (
     <div className="py-4">
       <Breadcrumb>
@@ -28,16 +38,34 @@ const BreadCrumb = ({ title }: { title: string }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator className="text-[#6A7282] text-sm font-medium" />
           <BreadcrumbItem>
+            {/* we have to make the first one is category and the second one to loop over subcategories array */}
             <BreadcrumbLink asChild>
               <Link
-                href="/categories"
+                href={`/categories/${category._id}`}
                 className="text-[#6A7282] text-sm font-medium hover:text-[#16a34a]!"
               >
-                category name
+                {category.name}
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator className="text-[#6A7282] text-sm font-medium" />
+          {subcategories.map((subcategory) => {
+            return (
+              <React.Fragment key={subcategory._id}>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link
+                      href={`/categories/${subcategory._id}`}
+                      className="text-[#6A7282] text-sm font-medium hover:text-[#16a34a]!"
+                    >
+                      {subcategory.name}
+                    </Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="text-[#6A7282] text-sm font-medium" />
+              </React.Fragment>
+            );
+          })}
           <BreadcrumbItem>
             <BreadcrumbPage className="text-[#101828] font-medium text-sm">
               {title}

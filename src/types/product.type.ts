@@ -1,5 +1,6 @@
 import { BrandType } from "./brand.type";
 import { CategoryType } from "./category.type";
+import { SubCategoryType } from "./subcategory.type";
 
 export interface ProductType {
     _id: string,
@@ -14,6 +15,7 @@ export interface ProductType {
     quantity: number,
     category: CategoryType,
     brand: BrandType,
-    images: string[]
+    images: string[],
+    subcategory: SubCategoryType[]
 
 }
