@@ -87,7 +87,13 @@ const page = () => {
         <div className="bg-gray-50/50 min-h-screen">
           <div className="bg-white border-b border-gray-100 ">
             <div className="container mx-auto px-4 py-8">
-              <BreadCrumb pageName="WishList" />
+              <BreadCrumb
+                pageName="WishList"
+                homeColor="text-[#6A7282]"
+                separatorColor="text-[#6A7282]"
+                homeHover="hover:text-[#16a34a]!"
+                pageColor="text-[#101828]"
+              />
               <WishListHeader count={wishListCount} />
             </div>
           </div>

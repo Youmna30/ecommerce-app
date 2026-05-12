@@ -161,7 +161,7 @@ const NavBarBottom = () => {
                 asChild
                 className={`${navigationMenuTriggerStyle()} hover:bg-transparent hover:text-[#16a34a] font-medium text-[#364153] text-md`}
               >
-                <Link href="/">Brands</Link>
+                <Link href="/brands">Brands</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>

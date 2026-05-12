@@ -68,8 +68,14 @@ const page = () => {
       )}
       {cartData?.products && cartData?.products.length > 0 && (
         <div className="bg-gray-50 py-8">
-          <div className="container mx-auto px-4">
-            <BreadCrumb pageName="Shopping Cart" />
+          <div className="container mx-auto px-4 space-y-4">
+            <BreadCrumb
+              pageName="Shopping Cart"
+              homeColor="text-[#6A7282]"
+              separatorColor="text-[#6A7282]"
+              homeHover="hover:text-[#16a34a]!"
+              pageColor="text-[#101828]"
+            />
             <HeaderCart numberOfCartItems={numberOfCartItems} />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
